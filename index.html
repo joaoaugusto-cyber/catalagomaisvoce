@@ -1,318 +1,218 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>Mais Você — Catálogo</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Mais Você — Catálogo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-html,body{margin:0;padding:0;background:#f4fbf8;-webkit-font-smoothing:antialiased;}
-body{font-family:'Poppins',sans-serif;}
-body::-webkit-scrollbar{display:none;}
-a{color:#3d8f74;text-decoration:none;}a:hover{color:#23493e;}
-input,textarea,button{font-family:'Poppins',sans-serif;}
+html,body{margin:0;padding:0;background:#f4fbf8;-webkit-font-smoothing:antialiased}
+body{font-family:'Poppins',sans-serif;color:#23493e;text-align:center}
+body::-webkit-scrollbar{display:none}
+*{box-sizing:border-box}
+input,textarea,button{font-family:'Poppins',sans-serif}
+.page{position:relative;min-height:100vh;background:linear-gradient(180deg,#fff 0%,#f3faf7 30%,#e2f3eb 65%,#cfeadf 100%);overflow:hidden}
+.blobs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.blob{position:absolute;border-radius:50%}
+.b1{width:560px;height:560px;top:-140px;left:-180px;background:radial-gradient(circle,#c6e8da 0%,rgba(198,232,218,0) 70%);animation:f1 11s ease-in-out infinite alternate}
+.b2{width:640px;height:640px;top:35%;right:-260px;background:radial-gradient(circle,#b3dfcc 0%,rgba(179,223,204,0) 70%);animation:f2 13s ease-in-out infinite alternate}
+.b3{width:520px;height:520px;bottom:-180px;left:-120px;background:radial-gradient(circle,#a9d9c4 0%,rgba(169,217,196,0) 70%);animation:f3 15s ease-in-out infinite alternate}
+@keyframes f1{to{transform:translate(60px,40px)}}@keyframes f2{to{transform:translate(-50px,-60px)}}@keyframes f3{to{transform:translate(70px,-30px)}}
+main{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 28px}
+.hero{min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;padding:72px 0 48px}
+.hero img{width:clamp(150px,26vw,220px);height:auto;display:block}
+h1{margin:0;font-weight:600;font-size:clamp(36px,6.4vw,60px);line-height:1.1;letter-spacing:-.02em;color:#2f7a62;text-wrap:balance;max-width:680px}
+.lead,.desc{margin:0;font-size:clamp(17px,2.3vw,21px);line-height:1.6;color:#4a6a60;text-wrap:pretty}
+.lead{max-width:520px}
+.cue{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:24px}
+.cue span{font-size:13px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#3d8f74}
+.mouse{width:30px;height:48px;border-radius:20px;border:1.5px solid rgba(61,143,116,.5);display:flex;justify-content:center;padding-top:9px;background:rgba(255,255,255,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.dot{width:5px;height:10px;border-radius:3px;background:#3d8f74;animation:dot 1.6s ease-in-out infinite}
+@keyframes dot{to{transform:translateY(14px);opacity:0}}
+.list{display:flex;flex-direction:column;gap:72px;padding-bottom:96px}
+.card{display:flex;flex-direction:column;gap:28px;padding:18px 18px 40px;border-radius:36px;background:rgba(255,255,255,.42);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border:1px solid rgba(255,255,255,.8);box-shadow:0 30px 60px -30px rgba(40,110,88,.35),inset 0 1px 0 rgba(255,255,255,.9)}
+.media{border-radius:24px;overflow:hidden;aspect-ratio:16/10;background:#d9efe6}
+.media video{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.08);transition:transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.in .media video{transform:none}
+.txt{display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 24px}
+.num{font-size:14px;font-weight:600;letter-spacing:.2em;color:#67b09c}
+h2{margin:0;font-weight:600;font-size:clamp(28px,4.4vw,38px);line-height:1.15;color:#2f7a62;text-wrap:balance}
+.desc{font-size:clamp(17px,2.3vw,20px);line-height:1.65;max-width:600px}
+.end{display:flex;flex-direction:column;align-items:center;gap:22px;padding:24px 0 150px}
+.end img{width:120px;height:auto}
+.end p{max-width:460px}
+.reveal{opacity:0;transform:translateY(60px) scale(.97);filter:blur(6px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1),filter 1s}
+.reveal.in{opacity:1;transform:none;filter:none}
+.fab-wrap{position:fixed;left:0;right:0;bottom:32px;display:flex;justify-content:center;z-index:5;pointer-events:none}
+.fab{pointer-events:auto;display:flex;align-items:center;gap:12px;padding:20px 36px;border-radius:999px;border:1px solid rgba(255,255,255,.85);background:rgba(61,143,116,.78);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);color:#fff;font-size:18px;font-weight:500;box-shadow:0 20px 40px -14px rgba(35,90,72,.55),inset 0 1px 0 rgba(255,255,255,.45);cursor:pointer}
+.fab:active{transform:scale(.97)}
+.overlay{position:fixed;inset:0;z-index:20;background:rgba(214,236,227,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow-y:auto;-webkit-overflow-scrolling:touch;display:none}
+.overlay.open{display:block}
+.sheet-wrap{max-width:760px;margin:40px auto 60px;padding:0 20px}
+.open .sheet-wrap{animation:sheet .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes sheet{from{opacity:0;transform:translateY(40px) scale(.98)}}
+.sheet{position:relative;padding:44px clamp(22px,5vw,52px) 48px;border-radius:36px;background:rgba(255,255,255,.62);backdrop-filter:blur(26px) saturate(150%);-webkit-backdrop-filter:blur(26px) saturate(150%);border:1px solid rgba(255,255,255,.9);box-shadow:0 40px 80px -30px rgba(35,90,72,.4),inset 0 1px 0 #fff}
+.close{position:absolute;top:18px;right:18px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(61,143,116,.2);background:rgba(255,255,255,.6);color:#2f7a62;font-size:22px;cursor:pointer}
+.form{display:flex;flex-direction:column;gap:40px}
+.group{display:flex;flex-direction:column;gap:18px;align-items:center}
+.label{font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#3d8f74}
+.head{display:flex;flex-direction:column;align-items:center;gap:12px}
+.head img{width:96px}
+.head h2{margin-top:6px;font-size:clamp(26px,4vw,34px)}
+.head p,.small{margin:0;font-size:16px;line-height:1.6;color:#4a6a60;max-width:540px;text-wrap:pretty}
+.field{width:100%;padding:18px 22px;border-radius:18px;border:1px solid rgba(61,143,116,.25);background:rgba(255,255,255,.7);font-size:18px;color:#23493e;text-align:center;outline:none}
+.field:focus{border-color:#3d8f74;background:rgba(255,255,255,.95)}
+textarea.field{font-size:17px;line-height:1.5;resize:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;width:100%}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.chip{padding:14px 22px;border-radius:999px;border:1px solid rgba(61,143,116,.25);background:rgba(255,255,255,.6);color:#2f7a62;font-size:16px;font-weight:500;cursor:pointer}
+.chip.on{background:rgba(61,143,116,.88);color:#fff;border-color:rgba(61,143,116,.9)}
+.seg{display:flex;gap:8px;padding:6px;border-radius:999px;background:rgba(255,255,255,.55);border:1px solid rgba(61,143,116,.2)}
+.seg button{padding:14px 34px;border-radius:999px;border:none;background:transparent;color:#2f7a62;font-size:16px;font-weight:500;cursor:pointer}
+.seg button.on{background:#3d8f74;color:#fff}
+.terms{max-height:170px;overflow-y:auto;padding:20px 24px;border-radius:20px;background:rgba(255,255,255,.5);border:1px solid rgba(61,143,116,.18);font-size:15px;line-height:1.7;color:#4a6a60}
+.check{display:flex;align-items:center;gap:14px;padding:12px 18px;border:none;background:transparent;color:#23493e;font-size:16px;cursor:pointer}
+.box{flex:none;width:30px;height:30px;border-radius:10px;border:1.5px solid #3d8f74;background:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+.check.on .box{background:#3d8f74}
+.sig{position:relative;width:100%;height:200px;border-radius:22px;background:rgba(255,255,255,.85);border:1.5px dashed rgba(61,143,116,.4);overflow:hidden}
+.sig canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.sig .ph{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);font-size:16px;color:rgba(61,143,116,.6);pointer-events:none}
+.sig .line{position:absolute;left:40px;right:40px;bottom:44px;height:1px;background:rgba(61,143,116,.3);pointer-events:none}
+.ghost{padding:10px 22px;border-radius:999px;border:1px solid rgba(61,143,116,.3);background:rgba(255,255,255,.6);color:#2f7a62;font-size:15px;font-weight:500;cursor:pointer}
+.primary{width:100%;max-width:420px;padding:22px 32px;border-radius:999px;border:1px solid rgba(255,255,255,.85);background:rgba(61,143,116,.45);color:#fff;font-size:18px;font-weight:600;cursor:pointer;box-shadow:0 20px 40px -16px rgba(35,90,72,.55),inset 0 1px 0 rgba(255,255,255,.45)}
+.primary.ok{background:rgba(61,143,116,.9)}
+.err{font-size:15px;color:#b4533d;min-height:22px}
+.done{display:none;flex-direction:column;align-items:center;gap:20px;padding:40px 0 20px}
+.done .ic{width:84px;height:84px;border-radius:50%;background:rgba(61,143,116,.14);display:flex;align-items:center;justify-content:center}
+.done h2{font-size:32px}
+.done p{margin:0;font-size:18px;line-height:1.6;color:#4a6a60;max-width:420px}
+.done button{margin-top:12px;padding:18px 40px;border-radius:999px;border:1px solid rgba(255,255,255,.85);background:rgba(61,143,116,.85);color:#fff;font-size:17px;font-weight:500;cursor:pointer}
+.sent .form{display:none}.sent .done{display:flex}
 </style>
-</helmet>
-<div ref="{{ rootRef }}" style="position:relative;min-height:100vh;font-family:'Poppins',sans-serif;color:#23493e;text-align:center;background:linear-gradient(180deg,#ffffff 0%,#f3faf7 30%,#e2f3eb 65%,#cfeadf 100%);overflow:hidden;">
-
-  <div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
-    <div data-blob="1" style="position:absolute;width:560px;height:560px;border-radius:50%;top:-140px;left:-180px;background:radial-gradient(circle,#c6e8da 0%,rgba(198,232,218,0) 70%);"></div>
-    <div data-blob="2" style="position:absolute;width:640px;height:640px;border-radius:50%;top:35%;right:-260px;background:radial-gradient(circle,#b3dfcc 0%,rgba(179,223,204,0) 70%);"></div>
-    <div data-blob="3" style="position:absolute;width:520px;height:520px;border-radius:50%;bottom:-180px;left:-120px;background:radial-gradient(circle,#a9d9c4 0%,rgba(169,217,196,0) 70%);"></div>
-  </div>
-
-  <main style="position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 28px;box-sizing:border-box;">
-
-    <section data-screen-label="Hero" style="min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;padding:72px 0 48px;">
-      <img data-reveal="0" src="assets/logo-mv.png" alt="Clínica &amp; Spa Mais Você" style="width:clamp(150px,26vw,220px);height:auto;display:block;">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
-        <h1 data-reveal="1" style="margin:0;font-weight:600;font-size:clamp(36px,6.4vw,60px);line-height:1.1;letter-spacing:-0.02em;color:#2f7a62;text-wrap:balance;max-width:680px;">Cuidado completo para seu bem-estar</h1>
-        <p data-reveal="2" style="margin:0;font-weight:400;font-size:clamp(17px,2.3vw,21px);line-height:1.6;color:#4a6a60;max-width:520px;text-wrap:pretty;">Fisioterapia, coluna, acupuntura, RPG e pilates em um só lugar.</p>
+</head>
+<body>
+<div class="page">
+  <div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+  <main>
+    <section class="hero">
+      <img class="reveal" data-d="0" src="logo-mv.png" alt="Clínica &amp; Spa Mais Você">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
+        <h1 class="reveal" data-d="1">Cuidado completo para seu bem-estar</h1>
+        <p class="lead reveal" data-d="2">Fisioterapia, coluna, acupuntura, RPG e pilates em um só lugar.</p>
       </div>
-      <div data-reveal="3" style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:24px;">
-        <span style="font-size:13px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#3d8f74;">Deslize para conhecer</span>
-        <div data-cue="1" style="width:30px;height:48px;border-radius:20px;border:1.5px solid rgba(61,143,116,0.5);display:flex;justify-content:center;padding-top:9px;box-sizing:border-box;background:rgba(255,255,255,0.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);">
-          <div data-dot="1" style="width:5px;height:10px;border-radius:3px;background:#3d8f74;"></div>
-        </div>
-      </div>
+      <div class="cue reveal" data-d="3"><span>Deslize para conhecer</span><div class="mouse"><div class="dot"></div></div></div>
     </section>
 
-    <div style="display:flex;flex-direction:column;gap:72px;padding-bottom:96px;">
-
-      <article data-screen-label="Fisioterapia" data-reveal="card" style="display:flex;flex-direction:column;gap:28px;padding:18px 18px 40px;border-radius:36px;background:rgba(255,255,255,0.42);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border:1px solid rgba(255,255,255,0.8);box-shadow:0 30px 60px -30px rgba(40,110,88,0.35),inset 0 1px 0 rgba(255,255,255,0.9);">
-        <div style="border-radius:24px;overflow:hidden;aspect-ratio:16/10;background:#d9efe6;">
-          <video src="assets/fisioterapia.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 24px;">
-          <span style="font-size:14px;font-weight:600;letter-spacing:0.2em;color:#67b09c;">01</span>
-          <h2 style="margin:0;font-weight:600;font-size:clamp(28px,4.4vw,38px);line-height:1.15;color:#2f7a62;">Fisioterapia</h2>
-          <p style="margin:0;font-size:clamp(17px,2.3vw,20px);line-height:1.65;color:#4a6a60;max-width:600px;text-wrap:pretty;">É a ciência que previne, trata e reabilita disfunções do movimento por meio de técnicas terapêuticas.</p>
-        </div>
-      </article>
-
-      <article data-screen-label="Coluna" data-reveal="card" style="display:flex;flex-direction:column;gap:28px;padding:18px 18px 40px;border-radius:36px;background:rgba(255,255,255,0.42);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border:1px solid rgba(255,255,255,0.8);box-shadow:0 30px 60px -30px rgba(40,110,88,0.35),inset 0 1px 0 rgba(255,255,255,0.9);">
-        <div style="border-radius:24px;overflow:hidden;aspect-ratio:16/10;background:#d9efe6;">
-          <video src="assets/fisioterapia.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 24px;">
-          <span style="font-size:14px;font-weight:600;letter-spacing:0.2em;color:#67b09c;">02</span>
-          <h2 style="margin:0;font-weight:600;font-size:clamp(28px,4.4vw,38px);line-height:1.15;color:#2f7a62;text-wrap:balance;">Fisioterapia especializada em coluna</h2>
-          <p style="margin:0;font-size:clamp(17px,2.3vw,20px);line-height:1.65;color:#4a6a60;max-width:600px;text-wrap:pretty;">Tem foco na prevenção, avaliação e tratamento de disfunções na coluna, promovendo alívio de dores, melhora na postura e recuperação funcional.</p>
-        </div>
-      </article>
-
-      <article data-screen-label="Acupuntura" data-reveal="card" style="display:flex;flex-direction:column;gap:28px;padding:18px 18px 40px;border-radius:36px;background:rgba(255,255,255,0.42);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border:1px solid rgba(255,255,255,0.8);box-shadow:0 30px 60px -30px rgba(40,110,88,0.35),inset 0 1px 0 rgba(255,255,255,0.9);">
-        <div style="border-radius:24px;overflow:hidden;aspect-ratio:16/10;background:#d9efe6;">
-          <video src="assets/acupuntura.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 24px;">
-          <span style="font-size:14px;font-weight:600;letter-spacing:0.2em;color:#67b09c;">03</span>
-          <h2 style="margin:0;font-weight:600;font-size:clamp(28px,4.4vw,38px);line-height:1.15;color:#2f7a62;">Acupuntura</h2>
-          <p style="margin:0;font-size:clamp(17px,2.3vw,20px);line-height:1.65;color:#4a6a60;max-width:600px;text-wrap:pretty;">É uma técnica da medicina tradicional chinesa que utiliza agulhas finas inseridas em pontos específicos do corpo para promover equilíbrio energético e tratar dores ou sintomas.</p>
-        </div>
-      </article>
-
-      <article data-screen-label="RPG" data-reveal="card" style="display:flex;flex-direction:column;gap:28px;padding:18px 18px 40px;border-radius:36px;background:rgba(255,255,255,0.42);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border:1px solid rgba(255,255,255,0.8);box-shadow:0 30px 60px -30px rgba(40,110,88,0.35),inset 0 1px 0 rgba(255,255,255,0.9);">
-        <div style="border-radius:24px;overflow:hidden;aspect-ratio:16/10;background:#d9efe6;">
-          <video src="assets/rpg.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 24px;">
-          <span style="font-size:14px;font-weight:600;letter-spacing:0.2em;color:#67b09c;">04</span>
-          <h2 style="margin:0;font-weight:600;font-size:clamp(28px,4.4vw,38px);line-height:1.15;color:#2f7a62;">RPG</h2>
-          <p style="margin:0;font-size:clamp(17px,2.3vw,20px);line-height:1.65;color:#4a6a60;max-width:600px;text-wrap:pretty;">A reeducação postural global é uma técnica que visa corrigir a postura e aliviar dores por meio de exercícios posturais estáticos e dinâmicos, reeducando a musculatura superficial e profunda e melhorando a conscientização corporal.</p>
-        </div>
-      </article>
-
-      <article data-screen-label="Pilates" data-reveal="card" style="display:flex;flex-direction:column;gap:28px;padding:18px 18px 40px;border-radius:36px;background:rgba(255,255,255,0.42);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border:1px solid rgba(255,255,255,0.8);box-shadow:0 30px 60px -30px rgba(40,110,88,0.35),inset 0 1px 0 rgba(255,255,255,0.9);">
-        <div style="border-radius:24px;overflow:hidden;aspect-ratio:16/10;background:#d9efe6;">
-          <video src="assets/pilates.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 24px;">
-          <span style="font-size:14px;font-weight:600;letter-spacing:0.2em;color:#67b09c;">05</span>
-          <h2 style="margin:0;font-weight:600;font-size:clamp(28px,4.4vw,38px);line-height:1.15;color:#2f7a62;">Pilates</h2>
-          <p style="margin:0;font-size:clamp(17px,2.3vw,20px);line-height:1.65;color:#4a6a60;max-width:600px;text-wrap:pretty;">É um método de exercício que foca no fortalecimento, na flexibilidade e no controle do corpo, respeitando a necessidade de cada paciente.</p>
-        </div>
-      </article>
+    <div class="list">
+      <article class="card reveal"><div class="media"><video src="fisioterapia.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+        <div class="txt"><span class="num">01</span><h2>Fisioterapia</h2><p class="desc">É a ciência que previne, trata e reabilita disfunções do movimento por meio de técnicas terapêuticas.</p></div></article>
+      <article class="card reveal"><div class="media"><video src="fisioterapia.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+        <div class="txt"><span class="num">02</span><h2>Fisioterapia especializada em coluna</h2><p class="desc">Tem foco na prevenção, avaliação e tratamento de disfunções na coluna, promovendo alívio de dores, melhora na postura e recuperação funcional.</p></div></article>
+      <article class="card reveal"><div class="media"><video src="acupuntura.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+        <div class="txt"><span class="num">03</span><h2>Acupuntura</h2><p class="desc">É uma técnica da medicina tradicional chinesa que utiliza agulhas finas inseridas em pontos específicos do corpo para promover equilíbrio energético e tratar dores ou sintomas.</p></div></article>
+      <article class="card reveal"><div class="media"><video src="rpg.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+        <div class="txt"><span class="num">04</span><h2>RPG</h2><p class="desc">A reeducação postural global é uma técnica que visa corrigir a postura e aliviar dores por meio de exercícios posturais estáticos e dinâmicos, reeducando a musculatura superficial e profunda e melhorando a conscientização corporal.</p></div></article>
+      <article class="card reveal"><div class="media"><video src="pilates.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+        <div class="txt"><span class="num">05</span><h2>Pilates</h2><p class="desc">É um método de exercício que foca no fortalecimento, na flexibilidade e no controle do corpo, respeitando a necessidade de cada paciente.</p></div></article>
     </div>
 
-    <section data-screen-label="Encerramento" data-reveal="card" style="display:flex;flex-direction:column;align-items:center;gap:22px;padding:24px 0 {{ endPad }};">
-      <img src="assets/logo-mv.png" alt="Mais Você" style="width:120px;height:auto;display:block;">
-      <p style="margin:0;font-size:clamp(17px,2.3vw,20px);line-height:1.6;color:#4a6a60;max-width:460px;text-wrap:pretty;">Pergunte à nossa recepção sobre horários e avaliação.</p>
+    <section class="end reveal">
+      <img src="logo-mv.png" alt="Mais Você">
+      <p class="desc">Pergunte à nossa recepção sobre horários e avaliação.</p>
     </section>
   </main>
 
-  <sc-if value="{{ comFicha }}" hint-placeholder-val="{{ false }}">
-    <div style="position:fixed;left:0;right:0;bottom:32px;display:flex;justify-content:center;z-index:5;pointer-events:none;">
-      <button onClick="{{ abrir }}" style="pointer-events:auto;display:flex;align-items:center;gap:12px;padding:20px 36px;border-radius:999px;border:1px solid rgba(255,255,255,0.85);background:rgba(61,143,116,0.78);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);color:#ffffff;font-size:18px;font-weight:500;letter-spacing:0.01em;box-shadow:0 20px 40px -14px rgba(35,90,72,0.55),inset 0 1px 0 rgba(255,255,255,0.45);cursor:pointer;" style-active="transform:scale(0.97);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"></rect><path d="M9 8h6M9 12h6M9 16h3"></path></svg>
-        Preencher ficha de anamnese
-      </button>
-    </div>
-  </sc-if>
+  <div class="fab-wrap"><button class="fab" id="abrir">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"></rect><path d="M9 8h6M9 12h6M9 16h3"></path></svg>
+    Preencher ficha de anamnese</button></div>
 
-  <sc-if value="{{ aberto }}" hint-placeholder-val="{{ false }}">
-    <div ref="{{ overlayRef }}" style="position:fixed;inset:0;z-index:20;background:rgba(214,236,227,0.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow-y:auto;-webkit-overflow-scrolling:touch;">
-      <div ref="{{ sheetRef }}" style="max-width:760px;margin:40px auto 60px;padding:0 20px;box-sizing:border-box;">
-        <div style="position:relative;padding:44px clamp(22px,5vw,52px) 48px;border-radius:36px;background:rgba(255,255,255,0.62);backdrop-filter:blur(26px) saturate(150%);-webkit-backdrop-filter:blur(26px) saturate(150%);border:1px solid rgba(255,255,255,0.9);box-shadow:0 40px 80px -30px rgba(35,90,72,0.4),inset 0 1px 0 rgba(255,255,255,1);text-align:center;">
-          <button onClick="{{ fechar }}" aria-label="Fechar" style="position:absolute;top:18px;right:18px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(61,143,116,0.2);background:rgba(255,255,255,0.6);color:#2f7a62;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
-
-          <sc-if value="{{ enviado }}" hint-placeholder-val="{{ false }}">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:20px;padding:40px 0 20px;">
-              <div style="width:84px;height:84px;border-radius:50%;background:rgba(61,143,116,0.14);display:flex;align-items:center;justify-content:center;">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3d8f74" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
-              </div>
-              <h2 style="margin:0;font-size:32px;font-weight:600;color:#2f7a62;">Ficha registrada</h2>
-              <p style="margin:0;font-size:18px;line-height:1.6;color:#4a6a60;max-width:420px;">Obrigada, {{ primeiroNome }}. Nossa equipe vai revisar suas informações antes do atendimento.</p>
-              <button onClick="{{ fechar }}" style="margin-top:12px;padding:18px 40px;border-radius:999px;border:1px solid rgba(255,255,255,0.85);background:rgba(61,143,116,0.85);color:#fff;font-size:17px;font-weight:500;cursor:pointer;">Voltar ao catálogo</button>
-            </div>
-          </sc-if>
-
-          <sc-if value="{{ preenchendo }}" hint-placeholder-val="{{ true }}">
-            <div style="display:flex;flex-direction:column;gap:40px;">
-              <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-                <img src="assets/logo-mv.png" alt="Mais Você" style="width:96px;height:auto;display:block;">
-                <h2 style="margin:6px 0 0;font-size:clamp(26px,4vw,34px);font-weight:600;color:#2f7a62;line-height:1.2;">Ficha de anamnese</h2>
-                <p style="margin:0;font-size:16px;line-height:1.6;color:#4a6a60;max-width:440px;">Preencha seus dados para agilizar sua avaliação.</p>
-              </div>
-
-              <div style="display:flex;flex-direction:column;gap:18px;">
-                <span style="font-size:13px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#3d8f74;">Dados pessoais</span>
-                <input value="{{ f.nome }}" onChange="{{ setNome }}" placeholder="Nome completo" style="width:100%;box-sizing:border-box;padding:18px 22px;border-radius:18px;border:1px solid rgba(61,143,116,0.25);background:rgba(255,255,255,0.7);font-size:18px;color:#23493e;text-align:center;outline:none;" style-focus="border-color:#3d8f74;background:rgba(255,255,255,0.95);">
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">
-                  <input value="{{ f.cpf }}" onChange="{{ setCpf }}" inputmode="numeric" placeholder="CPF" style="width:100%;box-sizing:border-box;padding:18px 22px;border-radius:18px;border:1px solid rgba(61,143,116,0.25);background:rgba(255,255,255,0.7);font-size:18px;color:#23493e;text-align:center;outline:none;" style-focus="border-color:#3d8f74;background:rgba(255,255,255,0.95);">
-                  <input value="{{ f.nasc }}" onChange="{{ setNasc }}" inputmode="numeric" placeholder="Data de nascimento" style="width:100%;box-sizing:border-box;padding:18px 22px;border-radius:18px;border:1px solid rgba(61,143,116,0.25);background:rgba(255,255,255,0.7);font-size:18px;color:#23493e;text-align:center;outline:none;" style-focus="border-color:#3d8f74;background:rgba(255,255,255,0.95);">
-                  <input value="{{ f.tel }}" onChange="{{ setTel }}" inputmode="tel" placeholder="Telefone" style="width:100%;box-sizing:border-box;padding:18px 22px;border-radius:18px;border:1px solid rgba(61,143,116,0.25);background:rgba(255,255,255,0.7);font-size:18px;color:#23493e;text-align:center;outline:none;" style-focus="border-color:#3d8f74;background:rgba(255,255,255,0.95);">
-                </div>
-              </div>
-
-              <div style="display:flex;flex-direction:column;gap:18px;align-items:center;">
-                <span style="font-size:13px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#3d8f74;">Tratamento de interesse</span>
-                <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
-                  <sc-for list="{{ servicos }}" as="s" hint-placeholder-count="5">
-                    <button onClick="{{ s.toggle }}" style="padding:14px 22px;border-radius:999px;border:1px solid {{ s.border }};background:{{ s.bg }};color:{{ s.color }};font-size:16px;font-weight:500;cursor:pointer;">{{ s.label }}</button>
-                  </sc-for>
-                </div>
-              </div>
-
-              <div style="display:flex;flex-direction:column;gap:18px;align-items:center;">
-                <span style="font-size:13px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#3d8f74;">Histórico de saúde</span>
-                <p style="margin:-6px 0 0;font-size:15px;color:#4a6a60;">Toque em tudo o que se aplica.</p>
-                <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
-                  <sc-for list="{{ condicoes }}" as="c" hint-placeholder-count="8">
-                    <button onClick="{{ c.toggle }}" style="padding:14px 22px;border-radius:999px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font-size:16px;font-weight:500;cursor:pointer;">{{ c.label }}</button>
-                  </sc-for>
-                </div>
-                <textarea value="{{ f.queixa }}" onChange="{{ setQueixa }}" rows="3" placeholder="Descreva sua queixa principal (onde dói, há quanto tempo…)" style="width:100%;box-sizing:border-box;padding:18px 22px;border-radius:18px;border:1px solid rgba(61,143,116,0.25);background:rgba(255,255,255,0.7);font-size:17px;line-height:1.5;color:#23493e;text-align:center;outline:none;resize:none;" style-focus="border-color:#3d8f74;background:rgba(255,255,255,0.95);"></textarea>
-              </div>
-
-              <div style="display:flex;flex-direction:column;gap:16px;align-items:center;">
-                <span style="font-size:13px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#3d8f74;">Autorização de uso de imagem</span>
-                <p style="margin:0;font-size:16px;line-height:1.6;color:#4a6a60;max-width:540px;text-wrap:pretty;">Autorizo a Clínica &amp; Spa Mais Você a utilizar fotos e vídeos registrados durante meus atendimentos em suas redes sociais e materiais de divulgação.</p>
-                <div style="display:flex;gap:8px;padding:6px;border-radius:999px;background:rgba(255,255,255,0.55);border:1px solid rgba(61,143,116,0.2);">
-                  <button onClick="{{ imgSim }}" style="padding:14px 34px;border-radius:999px;border:none;background:{{ simBg }};color:{{ simColor }};font-size:16px;font-weight:500;cursor:pointer;">Autorizo</button>
-                  <button onClick="{{ imgNao }}" style="padding:14px 34px;border-radius:999px;border:none;background:{{ naoBg }};color:{{ naoColor }};font-size:16px;font-weight:500;cursor:pointer;">Não autorizo</button>
-                </div>
-              </div>
-
-              <div style="display:flex;flex-direction:column;gap:16px;align-items:center;">
-                <span style="font-size:13px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#3d8f74;">Termo de consentimento</span>
-                <div style="max-height:170px;overflow-y:auto;padding:20px 24px;border-radius:20px;background:rgba(255,255,255,0.5);border:1px solid rgba(61,143,116,0.18);font-size:15px;line-height:1.7;color:#4a6a60;text-align:center;">
-                  Declaro que as informações prestadas nesta ficha são verdadeiras e completas. Estou ciente de que omitir dados sobre minha saúde pode comprometer a segurança do tratamento. Autorizo a realização da avaliação e dos procedimentos fisioterapêuticos indicados pelo profissional responsável, tendo sido informado(a) sobre seus objetivos, benefícios e possíveis desconfortos. Comprometo-me a comunicar qualquer alteração no meu estado de saúde. Meus dados serão tratados com sigilo, conforme a Lei Geral de Proteção de Dados (LGPD).
-                </div>
-                <button onClick="{{ toggleAceite }}" style="display:flex;align-items:center;gap:14px;padding:12px 18px;border:none;background:transparent;color:#23493e;font-size:16px;cursor:pointer;text-align:left;">
-                  <span style="flex:none;width:30px;height:30px;border-radius:10px;border:1.5px solid #3d8f74;background:{{ aceiteBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;">{{ aceiteMark }}</span>
-                  Li e concordo com o termo acima
-                </button>
-              </div>
-
-              <div style="display:flex;flex-direction:column;gap:14px;align-items:center;">
-                <span style="font-size:13px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#3d8f74;">Assinatura</span>
-                <div style="position:relative;width:100%;height:200px;border-radius:22px;background:rgba(255,255,255,0.85);border:1.5px dashed rgba(61,143,116,0.4);overflow:hidden;">
-                  <canvas ref="{{ sigRef }}" style="position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;"></canvas>
-                  <sc-if value="{{ semAssinatura }}" hint-placeholder-val="{{ true }}">
-                    <span style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);font-size:16px;color:rgba(61,143,116,0.6);pointer-events:none;">Assine aqui com o dedo</span>
-                  </sc-if>
-                  <div style="position:absolute;left:40px;right:40px;bottom:44px;height:1px;background:rgba(61,143,116,0.3);pointer-events:none;"></div>
-                </div>
-                <button onClick="{{ limpar }}" style="padding:10px 22px;border-radius:999px;border:1px solid rgba(61,143,116,0.3);background:rgba(255,255,255,0.6);color:#2f7a62;font-size:15px;font-weight:500;cursor:pointer;">Limpar assinatura</button>
-              </div>
-
-              <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-                <button onClick="{{ enviar }}" style="width:100%;max-width:420px;padding:22px 32px;border-radius:999px;border:1px solid rgba(255,255,255,0.85);background:{{ enviarBg }};color:#fff;font-size:18px;font-weight:600;cursor:pointer;box-shadow:0 20px 40px -16px rgba(35,90,72,0.55),inset 0 1px 0 rgba(255,255,255,0.45);">Enviar ficha</button>
-                <sc-if value="{{ erro }}" hint-placeholder-val="{{ false }}">
-                  <span style="font-size:15px;color:#b4533d;">{{ erro }}</span>
-                </sc-if>
-              </div>
-            </div>
-          </sc-if>
-        </div>
+  <div class="overlay" id="overlay">
+    <div class="sheet-wrap"><div class="sheet" id="sheet">
+      <button class="close" data-close aria-label="Fechar">×</button>
+      <div class="done">
+        <div class="ic"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3d8f74" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+        <h2>Ficha registrada</h2>
+        <p>Obrigada, <span id="pn">paciente</span>. Nossa equipe vai revisar suas informações antes do atendimento.</p>
+        <button data-close>Voltar ao catálogo</button>
       </div>
-    </div>
-  </sc-if>
+      <div class="form">
+        <div class="head"><img src="logo-mv.png" alt="Mais Você"><h2>Ficha de anamnese</h2><p>Preencha seus dados para agilizar sua avaliação.</p></div>
+        <div class="group"><span class="label">Dados pessoais</span>
+          <input class="field" id="nome" placeholder="Nome completo">
+          <div class="grid">
+            <input class="field" id="cpf" inputmode="numeric" placeholder="CPF" data-mask="###.###.###-##">
+            <input class="field" id="nasc" inputmode="numeric" placeholder="Data de nascimento" data-mask="##/##/####">
+            <input class="field" id="tel" inputmode="tel" placeholder="Telefone" data-mask="(##) #####-####">
+          </div></div>
+        <div class="group"><span class="label">Tratamento de interesse</span><div class="chips" id="serv"></div></div>
+        <div class="group"><span class="label">Histórico de saúde</span><p class="small" style="margin-top:-6px">Toque em tudo o que se aplica.</p><div class="chips" id="cond"></div>
+          <textarea class="field" id="queixa" rows="3" placeholder="Descreva sua queixa principal (onde dói, há quanto tempo…)"></textarea></div>
+        <div class="group"><span class="label">Autorização de uso de imagem</span>
+          <p class="small">Autorizo a Clínica &amp; Spa Mais Você a utilizar fotos e vídeos registrados durante meus atendimentos em suas redes sociais e materiais de divulgação.</p>
+          <div class="seg" id="img"><button data-v="sim">Autorizo</button><button data-v="nao">Não autorizo</button></div></div>
+        <div class="group"><span class="label">Termo de consentimento</span>
+          <div class="terms">Declaro que as informações prestadas nesta ficha são verdadeiras e completas. Estou ciente de que omitir dados sobre minha saúde pode comprometer a segurança do tratamento. Autorizo a realização da avaliação e dos procedimentos fisioterapêuticos indicados pelo profissional responsável, tendo sido informado(a) sobre seus objetivos, benefícios e possíveis desconfortos. Comprometo-me a comunicar qualquer alteração no meu estado de saúde. Meus dados serão tratados com sigilo, conforme a Lei Geral de Proteção de Dados (LGPD).</div>
+          <button class="check" id="aceite"><span class="box"></span>Li e concordo com o termo acima</button></div>
+        <div class="group" style="gap:14px"><span class="label">Assinatura</span>
+          <div class="sig"><canvas id="sig"></canvas><span class="ph" id="ph">Assine aqui com o dedo</span><div class="line"></div></div>
+          <button class="ghost" id="limpar">Limpar assinatura</button></div>
+        <div class="group" style="gap:12px"><button class="primary" id="enviar">Enviar ficha</button><span class="err" id="err"></span></div>
+      </div>
+    </div></div>
+  </div>
 </div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;comFicha&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Versão&quot;}}">
-const SERV = ['Fisioterapia','Coluna','Acupuntura','RPG','Pilates'];
-const COND = ['Hipertensão','Diabetes','Cirurgia recente','Gestante','Marcapasso','Hérnia de disco','Osteoporose','Alergias','Uso contínuo de medicação'];
-const blank = () => ({ nome:'', cpf:'', nasc:'', tel:'', queixa:'', serv:[], cond:[], imagem:null, aceite:false });
-const mask = (v, pat) => { const d = v.replace(/\D/g,''); let o='', j=0; for (const ch of pat) { if (j>=d.length) break; o += ch==='#' ? d[j++] : ch; } return o; };
+<script>
+(function(){
+  // reveal on scroll
+  var els=[].slice.call(document.querySelectorAll('.reveal'));
+  els.forEach(function(el){var d=el.getAttribute('data-d');if(d)el.style.transitionDelay=(d*160)+'ms';});
+  function check(){var vh=window.innerHeight;els=els.filter(function(el){var r=el.getBoundingClientRect();if(r.top<vh*.88&&r.bottom>0){el.classList.add('in');return false;}return true;});}
+  window.addEventListener('scroll',check,{passive:true});window.addEventListener('resize',check);
+  requestAnimationFrame(check);setTimeout(check,300);
+  // videos
+  document.querySelectorAll('video').forEach(function(v){v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});});
+  document.addEventListener('touchstart',function(){document.querySelectorAll('video').forEach(function(v){if(v.paused)v.play().catch(function(){});});},{once:true});
 
-class Component extends DCLogic {
-  state = { aberto:false, enviado:false, f: blank(), assinou:false, erro:'' };
-  rootRef = React.createRef();
-  overlayRef = React.createRef();
-  sheetRef = (el) => { if (el && el.animate) el.animate([{opacity:0,transform:'translateY(40px) scale(.98)'},{opacity:1,transform:'none'}],{duration:500,easing:'cubic-bezier(.2,.7,.2,1)'}); };
+  // form
+  var $=function(id){return document.getElementById(id)};
+  var st;
+  function reset(){st={serv:[],cond:[],imagem:null,aceite:false,assinou:false};
+    ['nome','cpf','nasc','tel','queixa'].forEach(function(id){$(id).value='';});
+    document.querySelectorAll('.chip.on,.seg button.on').forEach(function(b){b.classList.remove('on')});
+    $('aceite').classList.remove('on');$('aceite').querySelector('.box').textContent='';
+    $('sheet').classList.remove('sent');$('err').textContent='';clearSig();upd();}
+  function chips(id,list,key){var w=$(id);list.forEach(function(l){var b=document.createElement('button');b.className='chip';b.textContent=l;
+    b.onclick=function(){var a=st[key],i=a.indexOf(l);if(i>-1)a.splice(i,1);else a.push(l);b.classList.toggle('on');};w.appendChild(b);});}
+  chips('serv',['Fisioterapia','Coluna','Acupuntura','RPG','Pilates'],'serv');
+  chips('cond',['Hipertensão','Diabetes','Cirurgia recente','Gestante','Marcapasso','Hérnia de disco','Osteoporose','Alergias','Uso contínuo de medicação'],'cond');
+  document.querySelectorAll('[data-mask]').forEach(function(inp){inp.addEventListener('input',function(){var d=inp.value.replace(/\D/g,''),pat=inp.getAttribute('data-mask'),o='',j=0;
+    for(var k=0;k<pat.length&&j<d.length;k++)o+=pat[k]==='#'?d[j++]:pat[k];inp.value=o;upd();});});
+  $('nome').addEventListener('input',upd);
+  $('img').querySelectorAll('button').forEach(function(b){b.onclick=function(){$('img').querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');st.imagem=b.getAttribute('data-v');upd();};});
+  $('aceite').onclick=function(){st.aceite=!st.aceite;this.classList.toggle('on',st.aceite);this.querySelector('.box').textContent=st.aceite?'✓':'';upd();};
+  function falta(){if($('nome').value.trim().length<=2)return'Informe seu nome completo.';if($('cpf').value.length!==14)return'Informe um CPF válido.';
+    if(!st.imagem)return'Escolha uma opção sobre o uso de imagem.';if(!st.aceite)return'É preciso concordar com o termo.';if(!st.assinou)return'Assine no campo de assinatura.';return'';}
+  function upd(){$('enviar').classList.toggle('ok',!falta());$('err').textContent='';}
+  $('enviar').onclick=function(){var f=falta();if(f){$('err').textContent=f;return;}
+    $('pn').textContent=$('nome').value.trim().split(' ')[0];$('sheet').classList.add('sent');$('overlay').scrollTop=0;};
 
-  sigRef = (cv) => {
-    if (!cv || cv === this._cv) return;
-    this._cv = cv;
-    const fit = () => { const r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio||1; cv.width = r.width*dpr; cv.height = r.height*dpr; const c = cv.getContext('2d'); c.scale(dpr,dpr); c.lineWidth=2.6; c.lineCap='round'; c.lineJoin='round'; c.strokeStyle='#1f4a3d'; };
-    requestAnimationFrame(fit);
-    let drawing=false, last=null;
-    const pt = e => { const r = cv.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; };
-    cv.addEventListener('pointerdown', e => { drawing=true; last=pt(e); cv.setPointerCapture(e.pointerId); if (!this.state.assinou) this.setState({assinou:true}); });
-    cv.addEventListener('pointermove', e => { if(!drawing) return; const p=pt(e), c=cv.getContext('2d'); c.beginPath(); c.moveTo(last.x,last.y); const mx=(last.x+p.x)/2, my=(last.y+p.y)/2; c.quadraticCurveTo(last.x,last.y,mx,my); c.lineTo(p.x,p.y); c.stroke(); last=p; });
-    const end = () => { drawing=false; };
-    cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
-  };
+  // signature
+  var cv=$('sig'),ctx=cv.getContext('2d'),drawing=false,last=null;
+  function fit(){var r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;cv.width=r.width*dpr;cv.height=r.height*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.lineWidth=2.6;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#1f4a3d';}
+  function clearSig(){ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.restore();if(st)st.assinou=false;$('ph').style.display='';}
+  function pt(e){var r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};}
+  cv.addEventListener('pointerdown',function(e){drawing=true;last=pt(e);cv.setPointerCapture(e.pointerId);st.assinou=true;$('ph').style.display='none';upd();});
+  cv.addEventListener('pointermove',function(e){if(!drawing)return;var p=pt(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.quadraticCurveTo(last.x,last.y,(last.x+p.x)/2,(last.y+p.y)/2);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;});
+  cv.addEventListener('pointerup',function(){drawing=false});cv.addEventListener('pointercancel',function(){drawing=false});
+  $('limpar').onclick=function(){clearSig();upd();};
 
-  componentDidMount() {
-    const root = this.rootRef.current; if (!root) return;
-    root.querySelectorAll('video').forEach(v => { v.muted = true; v.loop = true; v.playsInline = true; const p = v.play(); if (p && p.catch) p.catch(()=>{}); });
-    const hide = [{opacity:0, transform:'translateY(60px) scale(.97)', filter:'blur(6px)'}];
-    const show = [{opacity:1, transform:'none', filter:'blur(0px)'}];
-    const els = [...root.querySelectorAll('[data-reveal]')];
-    els.forEach(el => el.animate(hide, {duration:0, fill:'forwards'}));
-    const pending = new Set(els);
-    const reveal = (el) => {
-      pending.delete(el);
-      const i = el.dataset.reveal; const delay = i==='card' ? 0 : (+i)*160;
-      el.animate([hide[0], show[0]], {duration:1000, delay, easing:'cubic-bezier(.2,.7,.2,1)', fill:'forwards'});
-      const vid = el.querySelector('div > video')?.parentElement;
-      if (vid) vid.animate([{transform:'scale(1.08)'},{transform:'scale(1)'}], {duration:1600, easing:'cubic-bezier(.2,.7,.2,1)', fill:'forwards'});
-    };
-    const check = () => {
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      pending.forEach(el => { const r = el.getBoundingClientRect(); if (r.top < vh*0.88 && r.bottom > 0) reveal(el); });
-    };
-    this._check = () => { if (this._raf) return; this._raf = requestAnimationFrame(() => { this._raf = 0; check(); }); };
-    document.addEventListener('scroll', this._check, {passive:true, capture:true});
-    window.addEventListener('resize', this._check);
-    this._poll = setInterval(() => { check(); if (!pending.size) clearInterval(this._poll); }, 400);
-    check();
-    const dot = root.querySelector('[data-dot]');
-    if (dot) dot.animate([{transform:'translateY(0)',opacity:1},{transform:'translateY(14px)',opacity:0}], {duration:1600, iterations:Infinity, easing:'ease-in-out'});
-    [['1',[0,0],[60,40]],['2',[0,0],[-50,-60]],['3',[0,0],[70,-30]]].forEach(([k,a,b]) => {
-      const b1 = root.querySelector(`[data-blob="${k}"]`);
-      if (b1) b1.animate([{transform:`translate(${a[0]}px,${a[1]}px)`},{transform:`translate(${b[0]}px,${b[1]}px)`}], {duration:9000+(+k)*2000, iterations:Infinity, direction:'alternate', easing:'ease-in-out'});
-    });
-  }
-  componentWillUnmount() { document.removeEventListener('scroll', this._check, {capture:true}); window.removeEventListener('resize', this._check); clearInterval(this._poll); }
-
-  upd(k, v) { this.setState(s => ({ f: {...s.f, [k]: v}, erro:'' })); }
-  toggle(k, item) { this.setState(s => { const arr = s.f[k]; return { f: {...s.f, [k]: arr.includes(item) ? arr.filter(x=>x!==item) : [...arr, item]} }; }); }
-  chip(on) { return on ? {bg:'rgba(61,143,116,0.88)', color:'#ffffff', border:'rgba(61,143,116,0.9)'} : {bg:'rgba(255,255,255,0.6)', color:'#2f7a62', border:'rgba(61,143,116,0.25)'}; }
-
-  renderVals() {
-    const { f, aberto, enviado, assinou, erro } = this.state;
-    const comFicha = this.props.comFicha ?? true;
-    const ok = f.nome.trim().length>2 && f.cpf.length===14 && f.imagem && f.aceite && assinou;
-    return {
-      rootRef: this.rootRef, overlayRef: this.overlayRef, sheetRef: this.sheetRef, sigRef: this.sigRef,
-      comFicha, endPad: comFicha ? '150px' : '80px',
-      aberto, enviado, preenchendo: !enviado, f, erro,
-      primeiroNome: (f.nome.trim().split(' ')[0]) || 'paciente',
-      abrir: () => { this._cv = null; this.setState({aberto:true, enviado:false, f:blank(), assinou:false, erro:''}); },
-      fechar: () => this.setState({aberto:false}),
-      setNome: e => this.upd('nome', e.target.value),
-      setCpf: e => this.upd('cpf', mask(e.target.value,'###.###.###-##')),
-      setNasc: e => this.upd('nasc', mask(e.target.value,'##/##/####')),
-      setTel: e => this.upd('tel', mask(e.target.value,'(##) #####-####')),
-      setQueixa: e => this.upd('queixa', e.target.value),
-      servicos: SERV.map(l => ({ label:l, ...this.chip(f.serv.includes(l)), toggle: () => this.toggle('serv', l) })),
-      condicoes: COND.map(l => ({ label:l, ...this.chip(f.cond.includes(l)), toggle: () => this.toggle('cond', l) })),
-      imgSim: () => this.upd('imagem','sim'), imgNao: () => this.upd('imagem','nao'),
-      simBg: f.imagem==='sim' ? '#3d8f74' : 'transparent', simColor: f.imagem==='sim' ? '#fff' : '#2f7a62',
-      naoBg: f.imagem==='nao' ? '#3d8f74' : 'transparent', naoColor: f.imagem==='nao' ? '#fff' : '#2f7a62',
-      toggleAceite: () => this.upd('aceite', !f.aceite),
-      aceiteBg: f.aceite ? '#3d8f74' : 'rgba(255,255,255,0.7)', aceiteMark: f.aceite ? '✓' : '',
-      semAssinatura: !assinou,
-      limpar: () => { const cv = this._cv; if (cv) { const c = cv.getContext('2d'); c.save(); c.setTransform(1,0,0,1,0,0); c.clearRect(0,0,cv.width,cv.height); c.restore(); } this.setState({assinou:false}); },
-      enviarBg: ok ? 'rgba(61,143,116,0.9)' : 'rgba(61,143,116,0.45)',
-      enviar: () => {
-        if (!ok) { const falta = f.nome.trim().length<=2 ? 'Informe seu nome completo.' : f.cpf.length!==14 ? 'Informe um CPF válido.' : !f.imagem ? 'Escolha uma opção sobre o uso de imagem.' : !f.aceite ? 'É preciso concordar com o termo.' : 'Assine no campo de assinatura.'; this.setState({erro:falta}); return; }
-        this.setState({enviado:true}); if (this.overlayRef.current) this.overlayRef.current.scrollTop = 0;
-      },
-    };
-  }
-}
+  $('abrir').onclick=function(){$('overlay').classList.add('open');document.body.style.overflow='hidden';reset();requestAnimationFrame(fit);};
+  document.querySelectorAll('[data-close]').forEach(function(b){b.onclick=function(){$('overlay').classList.remove('open');document.body.style.overflow='';};});
+  reset();
+})();
 </script>
 </body>
 </html>
