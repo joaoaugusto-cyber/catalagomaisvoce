@@ -217,6 +217,7 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
             <input class="field" id="cep" inputmode="numeric" placeholder="CEP" data-mask="#####-###">
           </div>
           <input class="field" id="end" placeholder="Endereço">
+          <input id="site" name="site" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
           <div class="seg" id="sexo"><button data-v="F">Feminino</button><button data-v="M">Masculino</button></div>
         </div>
         <div class="group"><span class="label">Área de interesse</span><div class="chips" id="area"></div></div>
@@ -291,8 +292,26 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
     if(!st.imagem)return'Responda sobre o direito de imagem.';if(!pads.sig1.signed)return'Assine a autorização de imagem.';
     if(!st.aceite)return'Confirme o termo de ciência.';if(!pads.sig2.signed)return'Assine o termo de ciência.';return'';}
   function upd(){$('enviar').classList.toggle('ok',!falta());$('err').textContent='';}
-  $('enviar').onclick=function(){var f=falta();if(f){$('err').textContent=f;return;}
-    $('pn').textContent=$('nome').value.trim().split(' ')[0];$('sheet').classList.add('sent');$('overlay').scrollTop=0;};
+  // envio para a planilha do Google (Apps Script) — ver planilha/COMO-INSTALAR.md
+  var FICHAS_URL='https://script.google.com/macros/s/AKfycbwSN2HglanFawJ2ZLnJZQQp0YsiRw6PEnJgri9LYn5dbU6PZSA4t5vsDgq4wApC6xyS/exec';
+  function on(sel){return [].map.call(document.querySelectorAll(sel),function(b){return b.textContent.trim()});}
+  function servicos(){var out=[];document.querySelectorAll('[data-list]').forEach(function(w){var s=[].map.call(w.querySelectorAll('.chip.on'),function(b){return b.textContent.trim()});
+    if(s.length){var t=w.previousElementSibling;out.push((t&&t.classList.contains('sub')?t.textContent.trim()+': ':'')+s.join(', '));}});return out.join(' | ');}
+  function assinatura(id){var c=$(id),w=Math.min(c.width,900),h=Math.round(c.height*w/c.width),o=document.createElement('canvas');o.width=w;o.height=h;
+    var x=o.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(c,0,0,w,h);return o.toDataURL('image/png');}
+  var enviando=false;
+  $('enviar').onclick=function(){if(enviando)return;var f=falta();if(f){$('err').textContent=f;return;}
+    if(!FICHAS_URL){$('err').textContent='Envio da ficha ainda não configurado.';return;}
+    var dados={nome:$('nome').value.trim(),cpf:$('cpf').value,nascimento:$('nasc').value,telefone:$('tel').value,email:$('email').value.trim(),
+      cep:$('cep').value,endereco:$('end').value.trim(),sexo:st.sexo==='F'?'Feminino':st.sexo==='M'?'Masculino':'',
+      areas:on('#area .chip.on').join(', '),servicos:servicos(),direitoImagem:st.imagem==='sim'?'Sim':'Não',
+      assinaturaImagem:assinatura('sig1'),termo:st.aceite,assinaturaTermo:assinatura('sig2'),data:$('hoje').textContent,site:$('site').value};
+    enviando=true;$('enviar').textContent='Enviando…';$('err').textContent='';
+    function fim(){enviando=false;$('enviar').textContent='Enviar ficha';}
+    fetch(FICHAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(dados)})
+      .then(function(r){return r.json()}).then(function(j){fim();if(!j||!j.ok)throw new Error(j&&j.erro);
+        $('pn').textContent=dados.nome.split(' ')[0];$('sheet').classList.add('sent');$('overlay').scrollTop=0;})
+      .catch(function(){fim();$('err').textContent='Não foi possível enviar. Verifique a internet e tente de novo.';});};
 
   function pad(id){var cv=$(id),ctx=cv.getContext('2d'),ph=cv.parentNode.querySelector('.ph'),drawing=false,last=null,p={signed:false};
     p.fit=function(){var r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;cv.width=r.width*dpr;cv.height=r.height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.lineWidth=2.6;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#1f4a3d';};
