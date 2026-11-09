@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo-mv.png">
 <meta name="theme-color" content="#f4fbf8">
-<meta name="description" content="Clínica &amp; Spa Mais Você: fisioterapia, coluna, acupuntura, RPG e pilates em um só lugar.">
+<meta name="description" content="Clínica &amp; Spa Mais Você: fisioterapia, coluna, acupuntura, RPG, pilates, estética e spa.">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 html,body{margin:0;padding:0;background:#f4fbf8;-webkit-font-smoothing:antialiased}
@@ -94,15 +94,38 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
 .done p{margin:0;font-size:18px;line-height:1.6;color:#4a6a60;max-width:420px}
 .done button{margin-top:12px;padding:18px 40px;border-radius:999px;border:1px solid rgba(255,255,255,.85);background:rgba(61,143,116,.85);color:#fff;font-size:17px;font-weight:500;cursor:pointer}
 .sent .form{display:none}.sent .done{display:flex}
+.tabs-wrap{position:fixed;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:6;pointer-events:none}
+.tabs{pointer-events:auto;display:flex;gap:6px;padding:6px;border-radius:999px;background:rgba(255,255,255,.55);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border:1px solid rgba(255,255,255,.85);box-shadow:0 16px 36px -18px rgba(35,90,72,.45),inset 0 1px 0 #fff}
+.tabs button{padding:14px 30px;border-radius:999px;border:none;background:transparent;color:#2f7a62;font-size:16px;font-weight:500;cursor:pointer;transition:background .3s,color .3s}
+.tabs button.on{background:rgba(61,143,116,.88);color:#fff}
+.view{display:none}.view.on{display:block;animation:fadein .6s cubic-bezier(.2,.7,.2,1)}
+@keyframes fadein{from{opacity:0;transform:translateY(16px)}}
+.cat-head{display:flex;flex-direction:column;align-items:center;gap:18px;padding:130px 0 56px}
+.cat-head img{width:clamp(120px,20vw,170px);height:auto}
+.pages{display:flex;flex-direction:column;gap:48px;padding-bottom:96px}
+.pagecard{padding:14px;border-radius:32px;background:rgba(255,255,255,.42);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border:1px solid rgba(255,255,255,.8);box-shadow:0 30px 60px -30px rgba(40,110,88,.35),inset 0 1px 0 rgba(255,255,255,.9)}
+.pagecard img{display:block;width:100%;height:auto;border-radius:20px}
+.sub{font-size:14px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#3d8f74;margin-top:6px}
+.chips.sm .chip{padding:12px 18px;font-size:15px}
+.nofab .fab-wrap{display:none}
+.date{font-size:15px;color:#4a6a60}
 .fab{white-space:nowrap}
+.pagecard{width:100%;max-width:620px;margin:0 auto}
+.pagecard img{background:#e6f4ee}
 .hero .reveal{opacity:1;transform:none;filter:none;transition:none;animation:heroIn .9s cubic-bezier(.2,.7,.2,1) both}
 .hero [data-d="1"]{animation-delay:.12s}.hero [data-d="2"]{animation-delay:.24s}.hero [data-d="3"]{animation-delay:.36s}
 @keyframes heroIn{from{opacity:0;transform:translateY(28px)}}
 @media (max-width:600px){
   main{padding:0 16px}
-  .hero{min-height:calc(100svh - 40px);gap:28px;padding:56px 0 96px}
+  .tabs-wrap{top:12px}
+  .tabs button{padding:11px 22px;font-size:15px}
+  .hero{min-height:calc(100svh - 40px);gap:28px;padding:96px 0 96px}
+  .cat-head{padding:100px 0 36px}
   .list{gap:40px;padding-bottom:120px}
+  .pages{gap:28px;padding-bottom:110px}
   .card{padding:12px 12px 32px;border-radius:28px;gap:22px}
+  .pagecard{padding:8px;border-radius:22px}
+  .pagecard img{border-radius:16px}
   .media{border-radius:18px}
   .txt{padding:0 10px}
   .fab-wrap{bottom:calc(16px + env(safe-area-inset-bottom))}
@@ -110,7 +133,6 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
   .sheet-wrap{margin:16px auto 32px;padding:0 12px}
   .sheet{padding:56px 18px 36px;border-radius:28px}
   .seg button{padding:13px 22px}
-  .blob{filter:none}
 }
 @media (prefers-reduced-motion:reduce){.blob,.dot{animation:none}.reveal{transition:none;opacity:1;transform:none;filter:none}}
 </style>
@@ -118,7 +140,9 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
 <body>
 <div class="page">
   <div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+  <div class="tabs-wrap"><div class="tabs" id="tabs"><button class="on" data-t="servicos">Serviços</button><button data-t="catalogo">Catálogo</button></div></div>
   <main>
+   <div class="view on" id="v-servicos">
     <section class="hero">
       <img class="reveal" data-d="0" src="logo-mv.png" width="480" height="305" alt="Clínica &amp; Spa Mais Você">
       <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
@@ -145,11 +169,32 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
       <img src="logo-mv.png" alt="Mais Você" loading="lazy" width="480" height="305">
       <p class="desc">Pergunte à nossa recepção sobre horários e avaliação.</p>
     </section>
+   </div>
+   <div class="view" id="v-catalogo">
+    <section class="cat-head">
+      <img class="reveal" src="logo-mv.png" width="480" height="305" alt="Mais Você">
+      <h1 class="reveal" data-d="1">Nosso catálogo</h1>
+      <p class="lead reveal" data-d="2">Transformando vidas e recuperando movimentos.</p>
+    </section>
+    <div class="pages">
+      <div class="pagecard reveal"><img src="pagina-01.webp" loading="lazy" decoding="async" width="590" height="836" alt="Clínica e Spa Mais Você"></div>
+      <div class="pagecard reveal"><img src="pagina-02.webp" loading="lazy" decoding="async" width="590" height="836" alt="Márcia Valfredo e a clínica"></div>
+      <div class="pagecard reveal"><img src="pagina-03.webp" loading="lazy" decoding="async" width="590" height="836" alt="Nosso catálogo"></div>
+      <div class="pagecard reveal"><img src="pagina-04.webp" loading="lazy" decoding="async" width="590" height="836" alt="Massagens"></div>
+      <div class="pagecard reveal"><img src="pagina-05.webp" loading="lazy" decoding="async" width="590" height="836" alt="Reflexologia, quatro mãos, escalda pés e drenagem"></div>
+      <div class="pagecard reveal"><img src="pagina-06.webp" loading="lazy" decoding="async" width="590" height="836" alt="Faciais"></div>
+      <div class="pagecard reveal"><img src="pagina-07.webp" loading="lazy" decoding="async" width="590" height="836" alt="Tratamentos"></div>
+    </div>
+    <section class="end reveal">
+      <img src="logo-mv.png" alt="Mais Você" loading="lazy" width="480" height="305">
+      <p class="desc">Pergunte à nossa recepção sobre horários e avaliação.</p>
+    </section>
+   </div>
   </main>
 
   <div class="fab-wrap"><button class="fab" id="abrir">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"></rect><path d="M9 8h6M9 12h6M9 16h3"></path></svg>
-    Preencher ficha de anamnese</button></div>
+    Preencher ficha de avaliação</button></div>
 
   <div class="overlay" id="overlay">
     <div class="sheet-wrap"><div class="sheet" id="sheet">
@@ -161,26 +206,39 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
         <button data-close>Voltar ao catálogo</button>
       </div>
       <div class="form">
-        <div class="head"><img src="logo-mv.png" alt="Mais Você" loading="lazy" width="480" height="305"><h2>Ficha de anamnese</h2><p>Preencha seus dados para agilizar sua avaliação.</p></div>
-        <div class="group"><span class="label">Dados pessoais</span>
+        <div class="head"><img src="logo-mv.png" alt="Mais Você" loading="lazy" width="480" height="305"><h2>Ficha de avaliação inicial</h2><p>Preencha seus dados para agilizar sua avaliação.</p></div>
+        <div class="group"><span class="label">Identificação pessoal</span>
           <input class="field" id="nome" placeholder="Nome completo">
           <div class="grid">
             <input class="field" id="cpf" inputmode="numeric" placeholder="CPF" data-mask="###.###.###-##">
             <input class="field" id="nasc" inputmode="numeric" placeholder="Data de nascimento" data-mask="##/##/####">
             <input class="field" id="tel" inputmode="tel" placeholder="Telefone" data-mask="(##) #####-####">
-          </div></div>
-        <div class="group"><span class="label">Tratamento de interesse</span><div class="chips" id="serv"></div></div>
-        <div class="group"><span class="label">Histórico de saúde</span><p class="small" style="margin-top:-6px">Toque em tudo o que se aplica.</p><div class="chips" id="cond"></div>
-          <textarea class="field" id="queixa" rows="3" placeholder="Descreva sua queixa principal (onde dói, há quanto tempo…)"></textarea></div>
-        <div class="group"><span class="label">Autorização de uso de imagem</span>
-          <p class="small">Autorizo a Clínica &amp; Spa Mais Você a utilizar fotos e vídeos registrados durante meus atendimentos em suas redes sociais e materiais de divulgação.</p>
-          <div class="seg" id="img"><button data-v="sim">Autorizo</button><button data-v="nao">Não autorizo</button></div></div>
-        <div class="group"><span class="label">Termo de consentimento</span>
-          <div class="terms">Declaro que as informações prestadas nesta ficha são verdadeiras e completas. Estou ciente de que omitir dados sobre minha saúde pode comprometer a segurança do tratamento. Autorizo a realização da avaliação e dos procedimentos fisioterapêuticos indicados pelo profissional responsável, tendo sido informado(a) sobre seus objetivos, benefícios e possíveis desconfortos. Comprometo-me a comunicar qualquer alteração no meu estado de saúde. Meus dados serão tratados com sigilo, conforme a Lei Geral de Proteção de Dados (LGPD).</div>
-          <button class="check" id="aceite"><span class="box"></span>Li e concordo com o termo acima</button></div>
-        <div class="group" style="gap:14px"><span class="label">Assinatura</span>
-          <div class="sig"><canvas id="sig"></canvas><span class="ph" id="ph">Assine aqui com o dedo</span><div class="line"></div></div>
-          <button class="ghost" id="limpar">Limpar assinatura</button></div>
+            <input class="field" id="email" type="email" inputmode="email" placeholder="E-mail">
+            <input class="field" id="cep" inputmode="numeric" placeholder="CEP" data-mask="#####-###">
+          </div>
+          <input class="field" id="end" placeholder="Endereço">
+          <div class="seg" id="sexo"><button data-v="F">Feminino</button><button data-v="M">Masculino</button></div>
+        </div>
+        <div class="group"><span class="label">Área de interesse</span><div class="chips" id="area"></div></div>
+        <div class="group"><span class="label">Serviços</span>
+          <span class="sub">Fisioterapia</span><div class="chips sm" data-list="Fisioterapia|Acupuntura|R.P.G|Terapia combinada|Melhora nas dores"></div>
+          <span class="sub">Pilates</span><div class="chips sm" data-list="Mobilidade|Fortalecimento|Melhora na postura|Saúde física e mental"></div>
+          <span class="sub">Estética · Tratamentos corporais</span><div class="chips sm" data-list="Flacidez|Gordura localizada|Celulite"></div>
+          <span class="sub">Estética · Tratamentos faciais</span><div class="chips sm" data-list="Rejuvenescimento|Sequelas de acne|Limpeza de pele"></div>
+          <span class="sub">SPA</span><div class="chips sm" data-list="Head SPA|Drenagem facial/corporal|Massagem relaxante|Banho com sais/ofurô|Day SPA|Esfoliação"></div>
+        </div>
+        <div class="group"><span class="label">Direito de imagem</span>
+          <p class="small">Autorização para filmagens para divulgação em nossas redes sociais.</p>
+          <div class="seg" id="img"><button data-v="sim">Sim</button><button data-v="nao">Não</button></div>
+          <div class="sig"><canvas id="sig1"></canvas><span class="ph">Assine aqui com o dedo</span><div class="line"></div></div>
+          <button class="ghost" data-clear="sig1">Limpar assinatura</button>
+        </div>
+        <div class="group"><span class="label">Termo de ciência</span>
+          <button class="check" id="aceite"><span class="box"></span>Declaro estar ciente e de acordo com as informações fornecidas neste cadastro.</button>
+          <div class="sig"><canvas id="sig2"></canvas><span class="ph">Assine aqui com o dedo</span><div class="line"></div></div>
+          <button class="ghost" data-clear="sig2">Limpar assinatura</button>
+          <span class="date">Data: <span id="hoje"></span></span>
+        </div>
         <div class="group" style="gap:12px"><button class="primary" id="enviar">Enviar ficha</button><span class="err" id="err"></span></div>
       </div>
     </div></div>
@@ -189,7 +247,7 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
 <script>
 (function(){
   // reveal on scroll
-  var els=[].slice.call(document.querySelectorAll('.reveal'));
+  var els=[].slice.call(document.querySelectorAll('.view.on .reveal, .end.reveal'));
   els.forEach(function(el){var d=el.getAttribute('data-d');if(d)el.style.transitionDelay=(d*160)+'ms';});
   function check(){var vh=window.innerHeight;els=els.filter(function(el){var r=el.getBoundingClientRect();if(r.top<vh*.88&&r.bottom>0){el.classList.add('in');return false;}return true;});}
   window.addEventListener('scroll',check,{passive:true});window.addEventListener('resize',check);
@@ -206,41 +264,54 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
   }else{vids.forEach(play);}
   document.addEventListener('touchstart',function(){vids.forEach(function(v){if(v.src&&v.paused){var r=v.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)play(v);}});},{once:true,passive:true});
 
+  // tabs
+  var params=new URLSearchParams(location.search);
+  if(params.get('ficha')==='0')document.body.classList.add('nofab');
+  document.querySelectorAll('#tabs button').forEach(function(b){b.onclick=function(){
+    document.querySelectorAll('#tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
+    document.querySelectorAll('.view').forEach(function(v){v.classList.toggle('on',v.id==='v-'+b.getAttribute('data-t'))});
+    window.scrollTo(0,0);
+    els=[].slice.call(document.querySelectorAll('.view.on .reveal:not(.in)'));
+    setTimeout(check,50);
+  };});
+
   // form
   var $=function(id){return document.getElementById(id)};
-  var st;
-  function reset(){st={serv:[],cond:[],imagem:null,aceite:false,assinou:false};
-    ['nome','cpf','nasc','tel','queixa'].forEach(function(id){$(id).value='';});
-    document.querySelectorAll('.chip.on,.seg button.on').forEach(function(b){b.classList.remove('on')});
-    $('aceite').classList.remove('on');$('aceite').querySelector('.box').textContent='';
-    $('sheet').classList.remove('sent');$('err').textContent='';clearSig();upd();}
-  function chips(id,list,key){var w=$(id);list.forEach(function(l){var b=document.createElement('button');b.className='chip';b.textContent=l;
-    b.onclick=function(){var a=st[key],i=a.indexOf(l);if(i>-1)a.splice(i,1);else a.push(l);b.classList.toggle('on');};w.appendChild(b);});}
-  chips('serv',['Fisioterapia','Coluna','Acupuntura','RPG','Pilates'],'serv');
-  chips('cond',['Hipertensão','Diabetes','Cirurgia recente','Gestante','Marcapasso','Hérnia de disco','Osteoporose','Alergias','Uso contínuo de medicação'],'cond');
+  var st={},pads={};
+  function mkChips(w,list){list.forEach(function(l){var b=document.createElement('button');b.className='chip';b.textContent=l;b.onclick=function(){b.classList.toggle('on')};w.appendChild(b);});}
+  mkChips($('area'),['Fisioterapia','Pilates','Estética','SPA']);
+  document.querySelectorAll('[data-list]').forEach(function(w){mkChips(w,w.getAttribute('data-list').split('|'))});
+  function seg(id,key){$(id).querySelectorAll('button').forEach(function(b){b.onclick=function(){$(id).querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');st[key]=b.getAttribute('data-v');upd();};});}
+  seg('img','imagem');seg('sexo','sexo');
   document.querySelectorAll('[data-mask]').forEach(function(inp){inp.addEventListener('input',function(){var d=inp.value.replace(/\D/g,''),pat=inp.getAttribute('data-mask'),o='',j=0;
     for(var k=0;k<pat.length&&j<d.length;k++)o+=pat[k]==='#'?d[j++]:pat[k];inp.value=o;upd();});});
   $('nome').addEventListener('input',upd);
-  $('img').querySelectorAll('button').forEach(function(b){b.onclick=function(){$('img').querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');st.imagem=b.getAttribute('data-v');upd();};});
   $('aceite').onclick=function(){st.aceite=!st.aceite;this.classList.toggle('on',st.aceite);this.querySelector('.box').textContent=st.aceite?'✓':'';upd();};
   function falta(){if($('nome').value.trim().length<=2)return'Informe seu nome completo.';if($('cpf').value.length!==14)return'Informe um CPF válido.';
-    if(!st.imagem)return'Escolha uma opção sobre o uso de imagem.';if(!st.aceite)return'É preciso concordar com o termo.';if(!st.assinou)return'Assine no campo de assinatura.';return'';}
+    if(!st.imagem)return'Responda sobre o direito de imagem.';if(!pads.sig1.signed)return'Assine a autorização de imagem.';
+    if(!st.aceite)return'Confirme o termo de ciência.';if(!pads.sig2.signed)return'Assine o termo de ciência.';return'';}
   function upd(){$('enviar').classList.toggle('ok',!falta());$('err').textContent='';}
   $('enviar').onclick=function(){var f=falta();if(f){$('err').textContent=f;return;}
     $('pn').textContent=$('nome').value.trim().split(' ')[0];$('sheet').classList.add('sent');$('overlay').scrollTop=0;};
 
-  // signature
-  var cv=$('sig'),ctx=cv.getContext('2d'),drawing=false,last=null;
-  function fit(){var r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;cv.width=r.width*dpr;cv.height=r.height*dpr;
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.lineWidth=2.6;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#1f4a3d';}
-  function clearSig(){ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.restore();if(st)st.assinou=false;$('ph').style.display='';}
-  function pt(e){var r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};}
-  cv.addEventListener('pointerdown',function(e){drawing=true;last=pt(e);cv.setPointerCapture(e.pointerId);st.assinou=true;$('ph').style.display='none';upd();});
-  cv.addEventListener('pointermove',function(e){if(!drawing)return;var p=pt(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.quadraticCurveTo(last.x,last.y,(last.x+p.x)/2,(last.y+p.y)/2);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;});
-  cv.addEventListener('pointerup',function(){drawing=false});cv.addEventListener('pointercancel',function(){drawing=false});
-  $('limpar').onclick=function(){clearSig();upd();};
+  function pad(id){var cv=$(id),ctx=cv.getContext('2d'),ph=cv.parentNode.querySelector('.ph'),drawing=false,last=null,p={signed:false};
+    p.fit=function(){var r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;cv.width=r.width*dpr;cv.height=r.height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.lineWidth=2.6;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#1f4a3d';};
+    p.clear=function(){ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.restore();p.signed=false;ph.style.display='';};
+    function pt(e){var r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};}
+    cv.addEventListener('pointerdown',function(e){drawing=true;last=pt(e);cv.setPointerCapture(e.pointerId);p.signed=true;ph.style.display='none';upd();});
+    cv.addEventListener('pointermove',function(e){if(!drawing)return;var q=pt(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.quadraticCurveTo(last.x,last.y,(last.x+q.x)/2,(last.y+q.y)/2);ctx.lineTo(q.x,q.y);ctx.stroke();last=q;});
+    cv.addEventListener('pointerup',function(){drawing=false});cv.addEventListener('pointercancel',function(){drawing=false});
+    pads[id]=p;}
+  pad('sig1');pad('sig2');
+  document.querySelectorAll('[data-clear]').forEach(function(b){b.onclick=function(){pads[b.getAttribute('data-clear')].clear();upd();};});
 
-  $('abrir').onclick=function(){$('overlay').classList.add('open');document.body.style.overflow='hidden';reset();requestAnimationFrame(fit);setTimeout(fit,80);};
+  function reset(){st={imagem:null,sexo:null,aceite:false};
+    document.querySelectorAll('.form input').forEach(function(i){i.value=''});
+    document.querySelectorAll('.form .chip.on,.form .seg button.on').forEach(function(b){b.classList.remove('on')});
+    $('aceite').classList.remove('on');$('aceite').querySelector('.box').textContent='';
+    $('sheet').classList.remove('sent');$('err').textContent='';pads.sig1.clear();pads.sig2.clear();
+    $('hoje').textContent=new Date().toLocaleDateString('pt-BR');upd();}
+  $('abrir').onclick=function(){$('overlay').classList.add('open');document.body.style.overflow='hidden';reset();var f=function(){pads.sig1.fit();pads.sig2.fit();};requestAnimationFrame(f);setTimeout(f,80);};
   document.querySelectorAll('[data-close]').forEach(function(b){b.onclick=function(){$('overlay').classList.remove('open');document.body.style.overflow='';};});
   reset();
 })();
