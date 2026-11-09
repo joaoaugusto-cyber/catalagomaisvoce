@@ -6,6 +6,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Mais Você — Catálogo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="logo-mv.png">
+<meta name="theme-color" content="#f4fbf8">
+<meta name="description" content="Clínica &amp; Spa Mais Você: fisioterapia, coluna, acupuntura, RPG e pilates em um só lugar.">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 html,body{margin:0;padding:0;background:#f4fbf8;-webkit-font-smoothing:antialiased}
@@ -59,7 +63,7 @@ h2{margin:0;font-weight:600;font-size:clamp(28px,4.4vw,38px);line-height:1.15;co
 .group{display:flex;flex-direction:column;gap:18px;align-items:center}
 .label{font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#3d8f74}
 .head{display:flex;flex-direction:column;align-items:center;gap:12px}
-.head img{width:96px}
+.head img{width:96px;height:auto}
 .head h2{margin-top:6px;font-size:clamp(26px,4vw,34px)}
 .head p,.small{margin:0;font-size:16px;line-height:1.6;color:#4a6a60;max-width:540px;text-wrap:pretty}
 .field{width:100%;padding:18px 22px;border-radius:18px;border:1px solid rgba(61,143,116,.25);background:rgba(255,255,255,.7);font-size:18px;color:#23493e;text-align:center;outline:none}
@@ -90,6 +94,25 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
 .done p{margin:0;font-size:18px;line-height:1.6;color:#4a6a60;max-width:420px}
 .done button{margin-top:12px;padding:18px 40px;border-radius:999px;border:1px solid rgba(255,255,255,.85);background:rgba(61,143,116,.85);color:#fff;font-size:17px;font-weight:500;cursor:pointer}
 .sent .form{display:none}.sent .done{display:flex}
+.fab{white-space:nowrap}
+.hero .reveal{opacity:1;transform:none;filter:none;transition:none;animation:heroIn .9s cubic-bezier(.2,.7,.2,1) both}
+.hero [data-d="1"]{animation-delay:.12s}.hero [data-d="2"]{animation-delay:.24s}.hero [data-d="3"]{animation-delay:.36s}
+@keyframes heroIn{from{opacity:0;transform:translateY(28px)}}
+@media (max-width:600px){
+  main{padding:0 16px}
+  .hero{min-height:calc(100svh - 40px);gap:28px;padding:56px 0 96px}
+  .list{gap:40px;padding-bottom:120px}
+  .card{padding:12px 12px 32px;border-radius:28px;gap:22px}
+  .media{border-radius:18px}
+  .txt{padding:0 10px}
+  .fab-wrap{bottom:calc(16px + env(safe-area-inset-bottom))}
+  .fab{padding:15px 24px;font-size:16px;gap:10px}
+  .sheet-wrap{margin:16px auto 32px;padding:0 12px}
+  .sheet{padding:56px 18px 36px;border-radius:28px}
+  .seg button{padding:13px 22px}
+  .blob{filter:none}
+}
+@media (prefers-reduced-motion:reduce){.blob,.dot{animation:none}.reveal{transition:none;opacity:1;transform:none;filter:none}}
 </style>
 </head>
 <body>
@@ -97,7 +120,7 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
   <div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
   <main>
     <section class="hero">
-      <img class="reveal" data-d="0" src="logo-mv.png" alt="Clínica &amp; Spa Mais Você">
+      <img class="reveal" data-d="0" src="logo-mv.png" width="480" height="305" alt="Clínica &amp; Spa Mais Você">
       <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
         <h1 class="reveal" data-d="1">Cuidado completo para seu bem-estar</h1>
         <p class="lead reveal" data-d="2">Fisioterapia, coluna, acupuntura, RPG e pilates em um só lugar.</p>
@@ -106,20 +129,20 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
     </section>
 
     <div class="list">
-      <article class="card reveal"><div class="media"><video src="fisioterapia.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+      <article class="card reveal"><div class="media"><video data-src="fisioterapia.mp4" poster="fisioterapia.webp" muted loop playsinline preload="none"></video></div>
         <div class="txt"><span class="num">01</span><h2>Fisioterapia</h2><p class="desc">É a ciência que previne, trata e reabilita disfunções do movimento por meio de técnicas terapêuticas.</p></div></article>
-      <article class="card reveal"><div class="media"><video src="fisioterapia.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+      <article class="card reveal"><div class="media"><video data-src="fisioterapia.mp4" poster="fisioterapia.webp" muted loop playsinline preload="none"></video></div>
         <div class="txt"><span class="num">02</span><h2>Fisioterapia especializada em coluna</h2><p class="desc">Tem foco na prevenção, avaliação e tratamento de disfunções na coluna, promovendo alívio de dores, melhora na postura e recuperação funcional.</p></div></article>
-      <article class="card reveal"><div class="media"><video src="acupuntura.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+      <article class="card reveal"><div class="media"><video data-src="acupuntura.mp4" poster="acupuntura.webp" muted loop playsinline preload="none"></video></div>
         <div class="txt"><span class="num">03</span><h2>Acupuntura</h2><p class="desc">É uma técnica da medicina tradicional chinesa que utiliza agulhas finas inseridas em pontos específicos do corpo para promover equilíbrio energético e tratar dores ou sintomas.</p></div></article>
-      <article class="card reveal"><div class="media"><video src="rpg.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+      <article class="card reveal"><div class="media"><video data-src="rpg.mp4" poster="rpg.webp" muted loop playsinline preload="none"></video></div>
         <div class="txt"><span class="num">04</span><h2>RPG</h2><p class="desc">A reeducação postural global é uma técnica que visa corrigir a postura e aliviar dores por meio de exercícios posturais estáticos e dinâmicos, reeducando a musculatura superficial e profunda e melhorando a conscientização corporal.</p></div></article>
-      <article class="card reveal"><div class="media"><video src="pilates.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+      <article class="card reveal"><div class="media"><video data-src="pilates.mp4" poster="pilates.webp" muted loop playsinline preload="none"></video></div>
         <div class="txt"><span class="num">05</span><h2>Pilates</h2><p class="desc">É um método de exercício que foca no fortalecimento, na flexibilidade e no controle do corpo, respeitando a necessidade de cada paciente.</p></div></article>
     </div>
 
     <section class="end reveal">
-      <img src="logo-mv.png" alt="Mais Você">
+      <img src="logo-mv.png" alt="Mais Você" loading="lazy" width="480" height="305">
       <p class="desc">Pergunte à nossa recepção sobre horários e avaliação.</p>
     </section>
   </main>
@@ -138,7 +161,7 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
         <button data-close>Voltar ao catálogo</button>
       </div>
       <div class="form">
-        <div class="head"><img src="logo-mv.png" alt="Mais Você"><h2>Ficha de anamnese</h2><p>Preencha seus dados para agilizar sua avaliação.</p></div>
+        <div class="head"><img src="logo-mv.png" alt="Mais Você" loading="lazy" width="480" height="305"><h2>Ficha de anamnese</h2><p>Preencha seus dados para agilizar sua avaliação.</p></div>
         <div class="group"><span class="label">Dados pessoais</span>
           <input class="field" id="nome" placeholder="Nome completo">
           <div class="grid">
@@ -172,8 +195,16 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
   window.addEventListener('scroll',check,{passive:true});window.addEventListener('resize',check);
   requestAnimationFrame(check);setTimeout(check,300);
   // videos
-  document.querySelectorAll('video').forEach(function(v){v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});});
-  document.addEventListener('touchstart',function(){document.querySelectorAll('video').forEach(function(v){if(v.paused)v.play().catch(function(){});});},{once:true});
+  // carrega cada vídeo só quando o card se aproxima da tela e pausa quando sai
+  var vids=[].slice.call(document.querySelectorAll('video[data-src]'));
+  function load(v){if(!v.src){v.src=v.getAttribute('data-src');v.preload='auto';}}
+  function play(v){load(v);v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});}
+  if('IntersectionObserver' in window){
+    var near=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){load(e.target);near.unobserve(e.target);}});},{rootMargin:'600px 0px'});
+    var vis=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)play(e.target);else e.target.pause();});},{threshold:.15});
+    vids.forEach(function(v){near.observe(v);vis.observe(v);});
+  }else{vids.forEach(play);}
+  document.addEventListener('touchstart',function(){vids.forEach(function(v){if(v.src&&v.paused){var r=v.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)play(v);}});},{once:true,passive:true});
 
   // form
   var $=function(id){return document.getElementById(id)};
@@ -209,7 +240,7 @@ textarea.field{font-size:17px;line-height:1.5;resize:none}
   cv.addEventListener('pointerup',function(){drawing=false});cv.addEventListener('pointercancel',function(){drawing=false});
   $('limpar').onclick=function(){clearSig();upd();};
 
-  $('abrir').onclick=function(){$('overlay').classList.add('open');document.body.style.overflow='hidden';reset();requestAnimationFrame(fit);};
+  $('abrir').onclick=function(){$('overlay').classList.add('open');document.body.style.overflow='hidden';reset();requestAnimationFrame(fit);setTimeout(fit,80);};
   document.querySelectorAll('[data-close]').forEach(function(b){b.onclick=function(){$('overlay').classList.remove('open');document.body.style.overflow='';};});
   reset();
 })();
